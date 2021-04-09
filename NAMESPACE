@@ -1,0 +1,8 @@
+exportPattern("^[[:alpha:]]+")
+importFrom("stats", "aggregate", "glm")
+importFrom("utils", "write.table","globalVariables")
+import("tidyverse")
+import("dplyr")
+importFrom("dplyr","filter")
+import("tibble")
+import("MplusAutomation")
