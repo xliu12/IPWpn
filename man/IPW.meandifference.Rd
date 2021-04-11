@@ -21,7 +21,6 @@ IPW.meandifference(
 \arguments{
 \item{Y}{An outcome variable}
 \item{Trt}{Treatment assignment indicator (1 for treatment and 0 for control). The treatment arm has multiple treatment clusters, and  the control arm has no clusters.
-%%     ~~Describe \code{x} here~~
 }
 \item{clus}{Observed treatment cluster assignment. clus = 0 for the control arm}
 \item{Lyz}{A matrix containing pre-treatment covariates. Lyz can contain two types of covariates. The first type of covariates affect both the treatment assignment and outcome directly. The second type of covariates do not affect the outcome in a given treatment cluster directly, but affect both the treatment assignment and treatment cluster assignment.}
@@ -53,12 +52,23 @@ IPW.meandifference returns a list "ipw10.md" containing the following components
 %%  \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~}
 
+
+
+
 \examples{
-##---- Not run ----
+%\dontrun{
+\donttest{
 %##-- ==>  Define data, use random,
-%##--	or do  help(data=index)  for the standard data sets.
-%## The function is currently defined as
-## IPW.meandifference(Y,Trt,clus,Lyz, Ly)
+data(dat_obs)
+head(dat_obs)
+IPW.meandifference(Y=dat_obs$Y,
+                   Trt=dat_obs$Trt,
+                   clus=dat_obs$clus,
+                   Lyz=dat_obs[,c('Ly','Lz')],
+                   Ly=dat_obs[,c('Ly')] )
+
+%}
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

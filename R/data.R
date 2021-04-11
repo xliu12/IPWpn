@@ -1,6 +1,6 @@
 #' A simulated observed dataset from a partially nested design.
 #'
-#' A dataset simulated from a A simulated observed data set from a partially nested design
+#' A dataset simulated from a partially nested design
 #' containing two types of pre-treatment confounders, treatment assignments,
 #' treatment cluster assignments, and outcome scores.
 #'

@@ -53,11 +53,19 @@ IPW.MLMPN returns a list "ipw10.mlmpn" containing the following components:
 %% ~~objects to See Also as \code{\link{help}}, ~~~}
 
 \examples{
-##---- Not run ----
+%\dontrun{
+\donttest{
 %##-- ==>  Define data, use random,
-%##--	or do  help(data=index)  for the standard data sets.
-%## The function is currently defined as
-## IPW.MLMPN (Y,Trt,clus,Lyz, Ly)
+data(dat_obs)
+head(dat_obs)
+IPW.MLMPN(Y=dat_obs$Y,
+                   Trt=dat_obs$Trt,
+                   clus=dat_obs$clus,
+                   Lyz=dat_obs[,c('Ly','Lz')],
+                   Ly=dat_obs[,c('Ly')] )
+
+%}
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
