@@ -8,7 +8,7 @@ Description: Use inverse-propensity-weighted (IPW) estimation approaches to esti
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
-Imports: MplusAutomation, tidyverse, stats, utils, dplyr, tibble, tidyr 
+Imports: MplusAutomation, tidyverse, mvtnorm, stats, utils, dplyr, tibble, tidyr 
 RoxygenNote: 7.1.1
 Suggests: 
     knitr,
@@ -16,3 +16,6 @@ Suggests:
     testthat (>= 2.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 2
+References: <https://github.com/xliu12/IPWpn>
+Depends: 
+    R (>= 2.10)
