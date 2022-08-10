@@ -29,7 +29,7 @@ Outcome.MLMPN(Y,
 }
 }
 \details{
-The multilevel model for the treatment outcome includes a random cluster-specific intercept. The covariates do not have random cluster-specific slopes.
+The multilevel model for the treatment outcome includes a random cluster-specific intercept. The covariates do not have random cluster-specific slopes. 
 }
 \value{
 Outcome.MLMPN returns a list containing the following components:
@@ -37,7 +37,7 @@ Outcome.MLMPN returns a list containing the following components:
 %%  \item{comp1 }{Description of 'comp1'}
 \item{Estimate }{the average treatment effect estimate. }
 \item{SE }{the standard error estimate of the average treatment effect estimate. }
-\item{z.wald }{the Wald statistic (i.e., Estimate/SE).
+\item{z.wald }{the Wald statistic (i.e., Estimate/SE). 
 %% ...
 }
 \references{
@@ -74,3 +74,8 @@ res
 % R documentation directory (show via RShowDoc("KEYWORDS")):
 \keyword{ ~design }% use one of  RShowDoc("KEYWORDS")
 \keyword{ ~models }% __ONLY ONE__ keyword per line
+% Use only one keyword per line.
+% For non-standard keywords, use \concept instead of \keyword:
+% \concept{ ~cpt1 }
+% \concept{ ~cpt2 }
+% Use only one concept per line.
