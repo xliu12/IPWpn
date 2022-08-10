@@ -33,7 +33,7 @@ IPW.MLMPN(
 \item{data}{A data frame containing all variables.}
 }
 \details{
-The sandwisch-type standard error estimate is returned, which accounts for the uncertainty in propensity score estimation.
+The sandwisch type standard error accounts for the uncertainty in propensity score estimation.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
@@ -42,8 +42,8 @@ IPW.MLMPN returns a list containing the following components:
 %%  If it is a LIST, use list(gammDiff,se_sw, z.wald)
 %%  \item{comp1 }{Description of 'comp1'}
 \item{Estimate }{the average treatment effect estimate. }
-\item{SE }{the standard error estimate of the average treatment effect estimate. }
-\item{z.wald }{the Wald statistic (i.e., Estimate/SE). }
+\item{Sandwich_SE }{the sandwich-type standard error estimate of the average treatment effect estimate. }
+\item{z.wald }{the Wald statistic (i.e., Estimate/Sandwich_SE). }
 }
 %%  \references{
 %% ~put references to the literature/web site here ~ }

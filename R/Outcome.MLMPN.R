@@ -85,7 +85,7 @@ Outcome.MLMPN <- function(
     # gamm1, varu1, vare1, gamm0, vare0, se_mplus, ACov
   )
   names(out)=as.character(expression(
-    Estimate, SE, z.wald
+    Estimate, Sandwich_SE, z.wald
     # gamm1, varu1, vare1, gamm0, vare0, se_mplus, ACov
   ))
   outcome.mlmpn=out

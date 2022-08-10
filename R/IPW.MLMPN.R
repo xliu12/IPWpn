@@ -345,9 +345,41 @@ IPW.MLMPN <- function(
     #, gamm1, varu1, vare1, gamm0, vare0, se_mplus, ACov
   )
   names(out)=as.character(expression(
-    Estimate, SE, z.wald
+    Estimate, Sandwich_SE, z.wald
     #, gamm1, varu1, vare1, gamm0, vare0, se_mplus, ACov
   ))
+
+
+#   return(out)
+#
+# }
+
+
+
+# IPW.MLMPN <- function(
+#   Y,
+#   Trt,
+#   clus,
+#   Lyz,
+#   Ly
+# ){
+# the proposed ----
+  # sandwich.se=TRUE
+  # dat_ps = EstPS(Trt = Trt,
+  #                Lyz = Lyz,
+  #                Ly = Ly)
+  # sandwich.se = sandwich.se
+  #
+  # out10=IPW.MLM_PN(
+  #   Y = Y,
+  #   Trt = Trt,
+  #   clus = clus,
+  #   ps1 = dat_ps[,"ps1"],
+  #   ps0 = dat_ps[,"ps0"],
+  #   Lyz = Lyz,
+  #   Ly = Ly,
+  #   sandwich.se = sandwich.se
+  # )
   ipw.mlmpn=out
   return(ipw.mlmpn)
 }
