@@ -6,17 +6,17 @@ Observed data in a partially nested design.
 }
 \description{
 A dataset simulated from a partially nested design containing two types of pre-treatment confounders, treatment assignments,
-treatment cluster assignments, and outcome scores.
+cluster assignments, and outcome scores.
 }
 \usage{data("dat_obs")}
 \format{
-  A data frame with 200 observations on the following 5 variables.
+  A data frame on the following 5 variables.
   \describe{
     \item{\code{Trt}}{a numeric vector}
-    \item{\code{clus}}{a numeric vector}
+    \item{\code{K}}{a numeric vector}
     \item{\code{Y}}{a numeric vector}
-    \item{\code{Ly}}{a numeric vector}
-    \item{\code{Lz}}{a numeric vector}
+    \item{\code{C}}{a numeric vector}
+    \item{\code{W}}{a numeric vector}
   }
 }
 %%\details{

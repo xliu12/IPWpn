@@ -13,32 +13,37 @@ IPW.MLMPN(
   Y,
   Trt,
   clus,
-  Lyz,
-  Ly
+  general_confounders,
+  clustering_confounders
+  %Lyz,
+  %Ly
 )
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-\item{Y}{An outcome variable}
-\item{Trt}{Treatment assignment indicator (1 for treatment and 0 for control). The treatment arm has multiple treatment clusters, and  the control arm has no clusters.
+\item{outcome}{a string indicating the name of the column containing the outcome variable.}
+\item{Treatment_assignment}{a string indicating the name of the column containing the treatment assignments (1 for treatment and 0 for control). (In the partially nested design, the treatment group has multiple clusters, and  the control group has no cluster.)
 %%     ~~Describe \code{x} here~~
 }
-\item{clus}{Observed treatment cluster assignment. clus = 0 for the control arm}
-\item{Lyz}{A matrix containing pre-treatment covariates. Lyz can contain two types of covariates. The first type of covariates affect both the treatment assignment and outcome directly. The second type of covariates do not affect the outcome in a given treatment cluster directly, but affect both the treatment assignment and treatment cluster assignment.}
-\item{Ly}{A matrix containing the pre-treatment covariates that affect both the treatment assignment and outcome directly. Ly is the first type of covariates contained in Lyz.}
+\item{cluster_assignment}{a string indicating the name of the column containing the observed cluster assignments. For an individual in the treatment group, the cluster assignment is the cluster in which the individual is assigned to receive the treatment (e.g., an integer in 1, 2, ,..., J, where J is the total number of clusters in the treatment group). For an individual in the control group, set the cluster assignment as 0.}
+%\item{Lyz}{A matrix containing pre-treatment covariates. Lyz can contain two types of covariates. The first type of covariates affect both the treatment assignment and outcome directly. The second type of covariates do not affect the outcome in a given treatment cluster directly, but affect both the treatment assignment and treatment cluster assignment.}
+\item{clustering_confounders}{A character vector containing the names of the clustering confounders. The clustering confounders are those baseline confounders that directly affect both the treatment assignment  and cluster assignment in the treatment group, but do not directly influence the outcome  once the treatment assignment and cluster assignment are given.}
+\item{general_confounders}{A character vector containing the names of the general confounders. The general confounders are those baseline confounders that directly affect both the treatment assignment and outcome within a cluster of the treatment group. (When one is uncertain about whether a covariate is a general confounder or a clustering confounder, the covariate should be classified as a general confounder to be conservative, because a general confounder can directly affect the outcome, cluster assignment, and treatment assignment.)
+}
+\item{data}{A data frame containing all variables.}
 }
 \details{
-The sandwisch type standard error estimation accounts for the clustering in the treatment arm.
+The sandwisch type standard error accounts for the uncertainty in propensity score estimation.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
 %%  ~Describe the value returned
-IPW.MLMPN returns a list "ipw10.mlmpn" containing the following components:
+IPW.MLMPN returns a list containing the following components:
 %%  If it is a LIST, use list(gammDiff,se_sw, z.wald)
 %%  \item{comp1 }{Description of 'comp1'}
-\item{gammDiff }{the treatment effect estimate, i.e., the mean difference between the treatment and control arm. }
-\item{se_sw }{the sandwich-type standard error estimate of the treatment effect estimate. }
-\item{z.wald }{the Wald statistic (i.e., gammDiff/se_sw). }
+\item{Estimate }{the average treatment effect estimate. }
+\item{Sandwich_SE }{the sandwich-type standard error estimate of the average treatment effect estimate. }
+\item{z.wald }{the Wald statistic (i.e., Estimate/Sandwich_SE). }
 }
 %%  \references{
 %% ~put references to the literature/web site here ~ }
@@ -58,11 +63,10 @@ IPW.MLMPN returns a list "ipw10.mlmpn" containing the following components:
 %##-- ==>  Define data, use random,
 data(dat_obs)
 head(dat_obs)
-IPW.MLMPN(Y=dat_obs$Y,
-                   Trt=dat_obs$Trt,
-                   clus=dat_obs$clus,
-                   Lyz=dat_obs[,c('Ly','Lz')],
-                   Ly=dat_obs[,c('Ly')] )
+
+res= IPW.MLMPN( outcome = 'Y', Treatment_assignment = 'Trt', cluster_assignment = 'K',
+                general_confounders = c('C'), clustering_confounders = c('W') , data = dat_obs)
+res
 
 %}
 }

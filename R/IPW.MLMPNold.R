@@ -2,12 +2,11 @@
 #’
 #’ @description
 #’
-#’ @param  outcome
-#’ @param  Treatment_assignment
-#’ @param  cluster_assignment
-#’ @param  general_confounders
-#’ @param  clustering_confounders
-#’ @param  data
+#’ @param  Y
+#’ @param  Trt
+#’ @param  clus
+#’ @param  Lyz
+#’ @param  Ly
 #’
 #’ @return A list.
 #’ @import MplusAutomation, tidyverse
@@ -24,14 +23,11 @@ options(tibble.width = Inf)
 
 
 IPW.MLMPN <- function(
-  outcome ='Y',
-  Treatment_assignment='Trt',
-  cluster_assignment='clus',
-  general_confounders,
-  clustering_confounders,
-  data
-  # Lyz,
-  # Ly
+  Y,
+  Trt,
+  clus,
+  Lyz,
+  Ly
 ){ # the proposed
 
 # PS estimation ----
@@ -42,42 +38,53 @@ IPW.MLMPN <- function(
 #   Ly
 # ){
 
-  Y=data[ , c(outcome)]; Trt=data[ , c(Treatment_assignment)];
-  clus=data[ , c( cluster_assignment)];
-  Lyz=data[ ,c( general_confounders, clustering_confounders)]
-  Ly=data[ , c(general_confounders)]
-
-  Y = drop(Y)
-  clus = drop(clus)
-  Trt = drop(Trt)
-  Lyz = as.matrix(Lyz); colnames(Lyz)=c('Ly','Lz')
-  Ly = as.matrix((Ly));colnames(Ly)=c('Ly' )
-
+  Lyz = as.matrix(Lyz)
+  Ly = as.matrix((Ly))
   glm1 = glm(Trt~Lyz-1, family = "binomial")
   glm0 = glm(Trt~Ly-1, family = "binomial")
   ps1=glm1$fitted.values
   ps0=glm0$fitted.values
 
+#   dat_ps = cbind(Trt, ps1, ps0,Lyz,Ly)
+#
+#   return(dat_ps)
+# }
+
+# IPW MLM-PN ----
+
+# IPW.MLM_PN_sw <- function(
+#   Y,
+#   Trt,
+#   clus,
+#   ps1,
+#   ps0,
+#   Lyz,
+#   Ly
+#   ){
+
   sandwich.se=TRUE
 
   pid=Sys.getpid()
+
+  Lyz = as.matrix(Lyz)
+  Ly = as.matrix((Ly))
+
+  Y = drop(Y)
+  clus = drop(clus)
+  Trt = drop(Trt)
+  ps1 = drop(ps1)
+  ps0 = drop(ps0)
 
   w = Trt/ps1 + (1-Trt)/(1-ps0)
   dat1=data.frame(Y,Trt,clus,Lyz,w)[Trt==1,]
   dat0=data.frame(Y,Trt,clus,Ly,w)[Trt==0,]
 
-  # # estimates for the treatment arm T==1
-  # # datfname = 'dat1.txt'
-  # # write.table(dat1, file = file.path(tempdir(), datfname)
-  # #             ,quote = F,row.names = F,col.names = F,na="999")
-  # datfname=paste(pid,"dat1.txt",sep = "")
-  # write.table(dat1, datfname,quote = F,row.names = F,col.names = F,na="999")
-  # normalized_scaling factor
-  normalized_s=nrow(dat1)/sum(dat1$w)
-  dat1_wtscale=as_tibble(dat1) %>% mutate( scaled_w=normalized_s*w )
-
+  # estimates for the treatment arm T==1
+  # datfname = 'dat1.txt'
+  # write.table(dat1, file = file.path(tempdir(), datfname)
+  #             ,quote = F,row.names = F,col.names = F,na="999")
   datfname=paste(pid,"dat1.txt",sep = "")
-  write.table(dat1_wtscale, datfname,quote = F,row.names = F,col.names = F,na="999")
+  write.table(dat1, datfname,quote = F,row.names = F,col.names = F,na="999")
 
   # mplus using w as sampling weights
   cat(sep = " ",
@@ -87,7 +94,7 @@ IPW.MLMPN <- function(
       VARIANCES=NOCHECK;
 
       Variable:
-      names = ", colnames(dat1_wtscale), ";
+      names = ", colnames(dat1), ";
       usevariables = Y;
       cluster = clus;
       weight = w;
@@ -340,11 +347,11 @@ IPW.MLMPN <- function(
   }
 
   out=list(
-    gammDiff, se_sw, as.numeric(z.wald)
+    gammDiff, se_sw, z.wald
     #, gamm1, varu1, vare1, gamm0, vare0, se_mplus, ACov
   )
   names(out)=as.character(expression(
-    Estimate, Sandwich_SE, z.wald
+    gammDiff, se_sw, z.wald
     #, gamm1, varu1, vare1, gamm0, vare0, se_mplus, ACov
   ))
 
@@ -379,7 +386,7 @@ IPW.MLMPN <- function(
   #   Ly = Ly,
   #   sandwich.se = sandwich.se
   # )
-  ipw.mlmpn=out
-  return(ipw.mlmpn)
+  ipw10.mlmpn=out
+  return(ipw10.mlmpn)
 }
 
