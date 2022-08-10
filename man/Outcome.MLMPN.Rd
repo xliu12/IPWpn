@@ -1,12 +1,8 @@
 \name{Outcome.MLMPN}
 \alias{Outcome.MLMPN}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Estimating the treatment effect from a partially nested design with the multilevel modeling based outcome models
-}
-\description{
-Outcome.MLMPN is used to estimate the treatment effect from a partially nested design (where the treatment arm has multiple treatment clusters, and  the control arm has no clusters) with the  multilevel modeling based outcome models (where a multilevel model is specified for the treatment outcome and a regression model is specified for the control outcome).
-}
+\title{Estimating the treatment effect from a partially nested design with the multilevel modeling based outcome models}
+\description{Outcome.MLMPN is used to estimate the treatment effect from a partially nested design (where the treatment arm has multiple treatment clusters, and  the control arm has no clusters) with the  multilevel modeling based outcome models (where a multilevel model is specified for the treatment outcome and a regression model is specified for the control outcome).}
 \usage{
 Outcome.MLMPN(Y,
   Trt,
@@ -28,33 +24,13 @@ Outcome.MLMPN(Y,
 \item{data}{A data frame containing all variables.}
 }
 }
-\details{
-The multilevel model for the treatment outcome includes a random cluster-specific intercept. The covariates do not have random cluster-specific slopes.
-}
-\value{
-Outcome.MLMPN returns a list containing the following components:
+\details{The multilevel model for the treatment outcome includes a random cluster-specific intercept. The covariates do not have random cluster-specific slopes.}
+\value{Outcome.MLMPN returns a list containing the following components:
 %%  If it is a LIST, use list(gammDiff,se_sw, z.wald)
 %%  \item{comp1 }{Description of 'comp1'}
 \item{Estimate }{the average treatment effect estimate. }
 \item{SE }{the standard error estimate of the average treatment effect estimate. }
-\item{z.wald }{the Wald statistic (i.e., Estimate/SE).
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
+\item{z.wald }{the Wald statistic (i.e., Estimate/SE).}
 
 \examples{
 %\dontrun{
