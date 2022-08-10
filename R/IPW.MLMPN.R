@@ -79,12 +79,18 @@ IPW.MLMPN <- function(
   dat1=data.frame(Y,Trt,clus,Lyz,w)[Trt==1,]
   dat0=data.frame(Y,Trt,clus,Ly,w)[Trt==0,]
 
-  # estimates for the treatment arm T==1
-  # datfname = 'dat1.txt'
-  # write.table(dat1, file = file.path(tempdir(), datfname)
-  #             ,quote = F,row.names = F,col.names = F,na="999")
+  # # estimates for the treatment arm T==1
+  # # datfname = 'dat1.txt'
+  # # write.table(dat1, file = file.path(tempdir(), datfname)
+  # #             ,quote = F,row.names = F,col.names = F,na="999")
+  # datfname=paste(pid,"dat1.txt",sep = "")
+  # write.table(dat1, datfname,quote = F,row.names = F,col.names = F,na="999")
+  # normalized_scaling factor
+  normalized_s=nrow(dat1)/sum(dat1$w)
+  dat1_wtscale=as_tibble(dat1) %>% mutate( scaled_w=normalized_s*w )
+
   datfname=paste(pid,"dat1.txt",sep = "")
-  write.table(dat1, datfname,quote = F,row.names = F,col.names = F,na="999")
+  write.table(dat1_wtscale, datfname,quote = F,row.names = F,col.names = F,na="999")
 
   # mplus using w as sampling weights
   cat(sep = " ",
@@ -94,7 +100,7 @@ IPW.MLMPN <- function(
       VARIANCES=NOCHECK;
 
       Variable:
-      names = ", colnames(dat1), ";
+      names = ", colnames(dat1_wtscale), ";
       usevariables = Y;
       cluster = clus;
       weight = w;
