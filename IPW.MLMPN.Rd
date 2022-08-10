@@ -1,18 +1,23 @@
-\name{Outcome.MLMPN}
-\alias{Outcome.MLMPN}
+\name{IPW.MLMPN}
+\alias{IPW.MLMPN}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Estimating the treatment effect from a partially nested design with the multilevel modeling based outcome models
+\title{Estimating the treatment effect from a partially nested design with the inverse-propensity-weighted multilevel modeling estimation approach
+%%  ~~function to do ... ~~
 }
 \description{
-Outcome.MLMPN is used to estimate the treatment effect from a partially nested design (where the treatment arm has multiple treatment clusters, and  the control arm has no clusters) with the  multilevel modeling based outcome models (where a multilevel model is specified for the treatment outcome and a regression model is specified for the control outcome).
+IPW.MLMPN is used to estimate the treatment effect from a partially nested design (where the treatment arm has multiple treatment clusters, and  the control arm has no clusters) with the inverse-propensity-weighted multilevel modeling (where a multilevel model is specified for the treatment arm and a regression model is specified for the control arm) estimation approach.
+%%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-Outcome.MLMPN(Y,
+IPW.MLMPN(
+  Y,
   Trt,
   clus,
   general_confounders,
-  clustering_confounders)
+  clustering_confounders
+  %Lyz,
+  %Ly
+)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -27,34 +32,30 @@ Outcome.MLMPN(Y,
 }
 \item{data}{A data frame containing all variables.}
 }
-}
 \details{
-The multilevel model for the treatment outcome includes a random cluster-specific intercept. The covariates do not have random cluster-specific slopes.
+The sandwisch-type standard error estimate is returned, which accounts for the uncertainty in propensity score estimation.
+%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-Outcome.MLMPN returns a list containing the following components:
+%%  ~Describe the value returned
+IPW.MLMPN returns a list containing the following components:
 %%  If it is a LIST, use list(gammDiff,se_sw, z.wald)
 %%  \item{comp1 }{Description of 'comp1'}
 \item{Estimate }{the average treatment effect estimate. }
 \item{SE }{the standard error estimate of the average treatment effect estimate. }
-\item{z.wald }{the Wald statistic (i.e., Estimate/SE).
-%% ...
+\item{z.wald }{the Wald statistic (i.e., Estimate/SE). }
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
+%%  \references{
+%% ~put references to the literature/web site here ~ }
+%%  \author{
 %%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
+%%  }
+%%  \note{
+%%  ~~further notes~~ }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
+%%  \seealso{
+%% ~~objects to See Also as \code{\link{help}}, ~~~}
 
 \examples{
 %\dontrun{
@@ -63,7 +64,7 @@ Outcome.MLMPN returns a list containing the following components:
 data(dat_obs)
 head(dat_obs)
 
-res= Outcome.MLMPN( outcome = 'Y', Treatment_assignment = 'Trt', cluster_assignment = 'K',
+res= IPW.MLMPN( outcome = 'Y', Treatment_assignment = 'Trt', cluster_assignment = 'K',
                 general_confounders = c('C'), clustering_confounders = c('W') , data = dat_obs)
 res
 
@@ -71,6 +72,6 @@ res
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory (show via RShowDoc("KEYWORDS")):
+% R documentation directory.
 \keyword{ ~design }% use one of  RShowDoc("KEYWORDS")
 \keyword{ ~models }% __ONLY ONE__ keyword per line
