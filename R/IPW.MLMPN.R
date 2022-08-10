@@ -50,8 +50,9 @@ IPW.MLMPN <- function(
   Y = drop(Y)
   clus = drop(clus)
   Trt = drop(Trt)
-  Lyz = as.matrix(Lyz); colnames(Lyz)=c('Ly','Lz')
-  Ly = as.matrix((Ly));colnames(Ly)=c('Ly' )
+
+  Ly = as.matrix((Ly));if(ncol(Ly)>0){ colnames(Ly)=paste0('Ly', 1:ncol(Ly)) }
+  Lyz = as.matrix(Lyz); if( ncol(Lyz)>ncol(Ly) ){ colnames(Lyz)=c(paste0('Ly', 1:ncol(Ly)), paste0('Lz', 1:(ncol(Lyz)-ncol(Ly)) )) }
 
   glm1 = glm(Trt~Lyz-1, family = "binomial")
   glm0 = glm(Trt~Ly-1, family = "binomial")
